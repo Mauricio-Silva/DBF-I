@@ -1,4 +1,4 @@
-package br.edu.ifms.model;
+package br.edu.ifms.frame1.model;
 
 import java.util.UUID;
 
@@ -16,5 +16,5 @@ public class User {
 }
 
 //Data - Getters e Setters
-//AllArgsConstructor - Construtor Completo
+//AllArgsConstructor - Construtor Completo Automático
 //NoArgsConstructor - Retira Construtor de Default
