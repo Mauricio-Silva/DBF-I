@@ -2,14 +2,16 @@ package br.edu.ifms.frame1.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifms.frame1.model.User;
 import br.edu.ifms.frame1.service.UserService;
@@ -37,32 +39,17 @@ public class UserController {
 
 
 
-    /*
-    @PostMapping("/{id}")
-    public RedirectView getById(@RequestBody User user) {
-        User user = this.userService.getById(id);
-        if (user.isPresent()) {
-            return new RedirectView (user.get(), HttpStatus.OK);
-        } 
-        else {
-            throw new RecordNotFoundException();
+    @PostMapping("/save")
+    public ModelAndView saveUser(@Valid User user, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return new ModelAndView("redirect:pageError");
         }
+     
+        this.userService.saveUser(user);
+        redirect.addAttribute("msg", "erro!Nome Vazio!");
+        
+        return new ModelAndView("redirect:/users/");
     }
-
-    @PostMapping(value = "book", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Book> addBook(@RequestBody Book book, UriComponentsBuilder builder) {
-		bookService.addBook(book);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/book/{id}").buildAndExpand(book.getBookId()).toUri());
-		return new ResponseEntity<Book>(book, headers, HttpStatus.CREATED);
-	}	
-	
-	@PostMapping(value = "send", consumes = { MediaType.APPLICATION_OCTET_STREAM_VALUE })
-	public String userData(@RequestBody byte[] data) {
-		bookService.userData(data);
-		return "Data sent.";
-	}
-    */
 }
 
 //RestController - Classe Controladora
