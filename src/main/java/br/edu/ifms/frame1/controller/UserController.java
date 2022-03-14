@@ -23,10 +23,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/list")
     public String getUser() {
         return "User is Here!";
     }
+
 
     @GetMapping("/")
     public ModelAndView listAll() {
@@ -37,6 +39,11 @@ public class UserController {
         return mv;
     }
 
+
+    @GetMapping("/register")
+    public ModelAndView registerUser() {
+        return new ModelAndView("UserRegister");
+    }
 
 
     @PostMapping("/save")

@@ -18,10 +18,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
     @GetMapping("/list")
     public String getProduct() {
         return "Product is Here!";
     }
+
 
     @GetMapping("/")
     public ModelAndView listAll() {
@@ -30,5 +32,24 @@ public class ProductController {
         mv.addObject("productsList", products);
 
         return mv;
+    }
+
+
+    @GetMapping("/register")
+    public ModelAndView registerProduct() {
+        return new ModelAndView("ProductRegister");
+    }
+
+
+    @PostMapping("/save")
+    public ModelAndView saveProduct(@Valid Product product, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return new ModelAndView("redirect:pageError");
+        }
+     
+        this.productService.saveProduct(product);
+        redirect.addAttribute("msg", "erro!Nome Vazio!");
+        
+        return new ModelAndView("redirect:/products/");
     }
 }
