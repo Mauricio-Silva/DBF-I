@@ -23,7 +23,7 @@ public class User {
     UUID id;
     @Column(name = "userName", nullable = false)
     @NotBlank
-    String nome;
+    String name;
     String email;
 }
 

@@ -42,7 +42,9 @@ public class UserController {
 
     @GetMapping("/register")
     public ModelAndView registerUser() {
-        return new ModelAndView("UserRegister");
+        ModelAndView mv = new ModelAndView("userRegister");
+        mv.addObject("user", new User());
+        return mv;
     }
 
 
@@ -53,10 +55,10 @@ public class UserController {
         }
      
         this.userService.saveUser(user);
-        redirect.addAttribute("msg", "erro!Nome Vazio!");
+        redirect.addAttribute("mensage", "User registered Successfully");
         
         return new ModelAndView("redirect:/users/");
-    }
+    }   
 }
 
 //RestController - Classe Controladora

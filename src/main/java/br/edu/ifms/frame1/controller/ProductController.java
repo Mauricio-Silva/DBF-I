@@ -2,11 +2,16 @@ package br.edu.ifms.frame1.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifms.frame1.model.Product;
 import br.edu.ifms.frame1.service.ProductService;
@@ -37,7 +42,9 @@ public class ProductController {
 
     @GetMapping("/register")
     public ModelAndView registerProduct() {
-        return new ModelAndView("ProductRegister");
+        ModelAndView mv = new ModelAndView("productRegister");
+        mv.addObject("product", new Product());
+        return mv;
     }
 
 
@@ -48,7 +55,7 @@ public class ProductController {
         }
      
         this.productService.saveProduct(product);
-        redirect.addAttribute("msg", "erro!Nome Vazio!");
+        redirect.addAttribute("mensage", "Product registered Successfully");
         
         return new ModelAndView("redirect:/products/");
     }
