@@ -21,13 +21,10 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
-    @Column(name = "ProductName", nullable = false)
+    @Column(nullable = false)
     @NotBlank
     String name;
-    @Column(name = "ProductQuantity")
     Integer quantity;
-    @Column(name = "ProductPrice")
     Double price;
-    @Column(name = "ProductDescription")
     String description;
 }

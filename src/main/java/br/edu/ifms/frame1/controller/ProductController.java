@@ -59,4 +59,17 @@ public class ProductController {
         
         return new ModelAndView("redirect:/products/");
     }
+
+
+    @PostMapping("/delete")
+    public ModelAndView deleteProduct(@Valid Product product, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return new ModelAndView("redirect:pageError");
+        }
+
+        this.productService.deleteProduct(product);
+        redirect.addAttribute("mensage", "Product deleted Successfully");
+
+        return new ModelAndView("redirect:/products/");
+    }
 }
