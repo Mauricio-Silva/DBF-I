@@ -27,8 +27,8 @@ public class UserController {
 
 
     @GetMapping("/")
-    public String getUser() {
-        return "User is Here!";
+    public ModelAndView getUser() {        
+        return new ModelAndView("userIndex");
     }
 
 
@@ -48,6 +48,7 @@ public class UserController {
     public ModelAndView registerUser() {
         ModelAndView html = new ModelAndView("userRegister");
         html.addObject("noUserData", new User());
+
         return html;
     }
 
@@ -60,24 +61,21 @@ public class UserController {
         }
         
         this.userService.saveUser(userFromRegister);
-        //redirect.addAttribute("mensage", "User registered Successfully");
-        
-        return new ModelAndView("redirect:/users/listAll");
+        ModelAndView html = new ModelAndView("redirect:/users/listAll");
+        html.addObject("save", "User saved Successfully");
+
+        return html;
     }   
 
 
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") UUID id) {
-        /*
-        if (result.hasErrors()) {
-            return new ModelAndView("redirect:pageError");
-        }
-        */
+    public ModelAndView deleteUser(@PathVariable("id") UUID id) {       
         this.userService.deleteUserById(id);
-        //redirect.addAttribute("mensage", "User deleted Successfully");
+        ModelAndView html = new ModelAndView("redirect:/users/listAll");
+        html.addObject("delete", "User deleted Successfully");
 
-        return new ModelAndView("redirect:/users/listAll");
+        return html;
     }
 
 
@@ -87,6 +85,7 @@ public class UserController {
         User userForUpdate = this.userService.getUserById(id);
         ModelAndView html = new ModelAndView("userUpdate");
         html.addObject("userForUpdate", userForUpdate);
+        
         return html;
     }
 
@@ -103,19 +102,9 @@ public class UserController {
         DBuser.setEmail(userFromRegister.getEmail());
         this.userService.saveUser(DBuser);
 
-        /*
-        if (userFromRegister.getId() == null) {
-            redirect.addAttribute("ID", "Null");
-        }
-        else {
-            redirect.addAttribute("ID", "Not-Null");
-        }
-        */
+        ModelAndView html = new ModelAndView("redirect:/users/listAll");
+        html.addObject("update", "User updated Successfully");
 
-        return new ModelAndView("redirect:/users/listAll");
+        return html;
     }
 }
-
-//RestController - Classe Controladora
-//RequestMapping - Especifica o Caminho
-//ModelAndView - Chama HTML passando parametros para exibir como resposta em vez de uma simples string

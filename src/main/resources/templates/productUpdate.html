@@ -5,32 +5,34 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/productForm.css}"/>
         <link rel="shortcut icon" th:href="@{/images/spring_framework_logo.png}">
-        <title>Frame 1 | Product Register</title>
+        <title>Frame 1 | Update Product</title>
     </head>
     <body>
         <main>        
-            <h3>Product Register</h3>
+            <h3>Update Product</h3>
             <hr/>
-            <form action="#" th:action="@{/products/save}" th:object="${noProductData}" method="post">
+            <form action="#" th:action="@{/products/update}" th:object="${productForUpdate}" method="post">
+
+                <input type="hidden" name="productId" th:field="*{id}"/>
                 <div class="row mb-3">
 
                     <div class="col">
                         <div class="form-group mb">
                             <label for="productName" class="form-label">Name</label>
                             <input type="text" class="form-control" id="productName" name="productName" aria-describedby="productNameHelp" required placeholder="Product Name" th:field="*{name}" />
-                            <div id="productNameHelp" class="form-text">Enter a product name here.</div>
+                            <div id="productNameHelp" class="form-text">Enter a new product name here.</div>
                         </div>
 
                         <div class="form-group mb">
                             <label for="productQuantity" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="productQuantity" name="productQuantity" aria-describedby="productQuantityHelp" required placeholder="Product Quantity" min="1" step="1" th:field="*{quantity}" />
-                            <div id="productQuantityHelp" class="form-text">Enter a product quantity here.</div>
+                            <div id="productQuantityHelp" class="form-text">Enter a new product quantity here.</div>
                         </div>
-                        
+
                         <div class="form-group mb">
                             <label for="productPrice" class="form-label">Price</label>
                             <input type="number" class="form-control" id="productPrice" name="productPrice" aria-describedby="productPriceHelp" required placeholder="Product Price R$" min="0.05" step="0.05" th:field="*{price}" />
-                            <div id="productPriceHelp" class="form-text">Enter a product price here.</div>
+                            <div id="productPriceHelp" class="form-text">Enter a new product price here.</div>
                         </div>
                     </div>
 
@@ -38,14 +40,14 @@
                         <div class="form-group">
                             <label for="productDescription" class="form-label">Description</label>
                             <textarea class="form-control" id="productDescription" name="productDescription" aria-describedby="productDescriptionHelp" rows="11" placeholder="Product Description" th:field="*{description}"></textarea>
-                            <div id="productDescriptionHelp" class="form-text">Enter a product description here.</div>
+                            <div id="productDescriptionHelp" class="form-text">Enter a new product description here.</div>
                         </div>
                     </div>
                     
                 </div>
                 <div class="button_area">
                     <a role="button" class="btn btn-primary" th:href="@{/products/listAll}">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
 
             </form>

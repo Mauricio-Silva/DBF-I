@@ -20,7 +20,12 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+
+    public User getUserById(UUID id) {
+        return this.userRepository.getById(id);
+    }
     
+
     public void saveUser(User user) {
         this.userRepository.save(user);
     }
@@ -28,10 +33,5 @@ public class UserService {
 
     public void deleteUserById(UUID id) {
         this.userRepository.deleteById(id);
-    }
-
-
-    public User getUserById(UUID id) {
-        return this.userRepository.getById(id);
     }
 }
