@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifms.frame1.model.User;
+import br.edu.ifms.frame1.model.UserNotFoundException;
 import br.edu.ifms.frame1.service.UserService;
 
 @RestController
@@ -70,7 +71,15 @@ public class UserController {
 
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") UUID id) {       
+    public ModelAndView deleteUser(@PathVariable("id") UUID id) throws UserNotFoundException {
+        try {
+            this.userService.getUserById(id);
+        }   
+        catch (UserNotFoundException e) {
+            e.printStackTrace();
+            throw new UserNotFoundException("User Not Found");
+        }     
+         
         this.userService.deleteUserById(id);
         ModelAndView html = new ModelAndView("redirect:/users/listAll");
         html.addObject("delete", "User deleted Successfully");
@@ -81,19 +90,33 @@ public class UserController {
 
     
     @GetMapping("/select/{id}")
-    public ModelAndView selectUser(@PathVariable("id") UUID id) {
-        User userForUpdate = this.userService.getUserById(id);
-        ModelAndView html = new ModelAndView("userUpdate");
-        html.addObject("userForUpdate", userForUpdate);
-        
-        return html;
+    public ModelAndView selectUser(@PathVariable("id") UUID id) throws UserNotFoundException {
+        try {
+            User userForUpdate = this.userService.getUserById(id);
+            ModelAndView html = new ModelAndView("userUpdate");
+            html.addObject("userForUpdate", userForUpdate);
+            return html;
+                
+        } 
+        catch (UserNotFoundException e) {
+            e.printStackTrace();
+            throw new UserNotFoundException("User Not Found");
+        }        
     }
 
 
 
     @PostMapping("/update")
-    public ModelAndView updateUser(@Valid User userFromRegister, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors() || userFromRegister.getId() == null) {
+    public ModelAndView updateUser(@Valid User userFromRegister, BindingResult result, RedirectAttributes redirect) throws UserNotFoundException {
+        try {
+            this.userService.getUserById(userFromRegister.getId());
+        }   
+        catch (UserNotFoundException e) {
+            e.printStackTrace();
+            throw new UserNotFoundException("User Not Found");
+        }   
+
+        if (result.hasErrors()) {
             return new ModelAndView("redirect:pageError");
         }
 

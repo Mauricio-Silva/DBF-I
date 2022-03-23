@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifms.frame1.model.User;
+import br.edu.ifms.frame1.model.UserNotFoundException;
 import br.edu.ifms.frame1.repository.UserRepository;
 
 @Service
@@ -21,8 +22,8 @@ public class UserService {
     }
 
 
-    public User getUserById(UUID id) {
-        return this.userRepository.getById(id);
+    public User getUserById(UUID id) throws UserNotFoundException{
+        return this.userRepository.getById(id);   
     }
     
 
